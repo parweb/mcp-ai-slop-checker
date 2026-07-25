@@ -20,8 +20,10 @@ That makes it useful in a loop an agent can actually close: write → score → 
 
 ## Install
 
+Installs straight from GitHub — not on npm yet, so use the `github:` spec:
+
 ```bash
-claude mcp add ai-slop-checker -- npx -y mcp-ai-slop-checker
+claude mcp add ai-slop-checker -- npx -y github:parweb/mcp-ai-slop-checker
 ```
 
 Or in any MCP client config (`claude_desktop_config.json`, `.mcp.json`, Cursor, etc.):
@@ -31,7 +33,7 @@ Or in any MCP client config (`claude_desktop_config.json`, `.mcp.json`, Cursor, 
   "mcpServers": {
     "ai-slop-checker": {
       "command": "npx",
-      "args": ["-y", "mcp-ai-slop-checker"]
+      "args": ["-y", "github:parweb/mcp-ai-slop-checker"]
     }
   }
 }
