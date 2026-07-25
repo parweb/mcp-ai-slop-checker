@@ -1,0 +1,23 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.parweb/ai-slop-checker",
+  "title": "AI Slop Checker",
+  "description": "Deterministic offline scorer for AI-writing tells in text and landing copy.",
+  "repository": {
+    "url": "https://github.com/parweb/mcp-ai-slop-checker",
+    "source": "github"
+  },
+  "websiteUrl": "https://github.com/parweb/mcp-ai-slop-checker",
+  "version": "1.0.0",
+  "packages": [
+    {
+      "registryType": "mcpb",
+      "identifier": "https://github.com/parweb/mcp-ai-slop-checker/releases/download/v1.0.0/mcp-ai-slop-checker.mcpb",
+      "fileSha256": "56a17584b7504d70a9023f8a4b5ce2e7e528b4982a3781a19351f81e6403f2d9",
+      "version": "1.0.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

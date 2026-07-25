@@ -20,6 +20,8 @@ That makes it useful in a loop an agent can actually close: write → score → 
 
 ## Install
 
+Listed in the official [MCP Registry](https://registry.modelcontextprotocol.io) as `io.github.parweb/ai-slop-checker`.
+
 Installs straight from GitHub — not on npm yet, so use the `github:` spec:
 
 ```bash
@@ -38,6 +40,10 @@ Or in any MCP client config (`claude_desktop_config.json`, `.mcp.json`, Cursor, 
   }
 }
 ```
+
+Or install the self-contained MCPB bundle (dependencies included, no install step) from the
+[v1.0.0 release](https://github.com/parweb/mcp-ai-slop-checker/releases/tag/v1.0.0) —
+`mcp-ai-slop-checker.mcpb`, SHA-256 `56a17584b7504d70a9023f8a4b5ce2e7e528b4982a3781a19351f81e6403f2d9`.
 
 From source:
 
