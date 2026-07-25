@@ -2,7 +2,7 @@
   "manifest_version": "0.2",
   "name": "mcp-ai-slop-checker",
   "display_name": "AI Slop Checker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Scores text and landing-page copy for AI-writing style tells. Deterministic, offline, no LLM call, no API key.",
   "author": { "name": "parweb", "url": "https://github.com/parweb" },
   "homepage": "https://github.com/parweb/mcp-ai-slop-checker",

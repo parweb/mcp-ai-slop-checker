@@ -1,6 +1,6 @@
 {
   "name": "mcp-ai-slop-checker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MCP server that scores text and landing-page copy for AI-writing style tells. Deterministic, offline, no LLM call.",
   "type": "module",
   "bin": {

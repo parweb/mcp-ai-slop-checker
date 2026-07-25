@@ -9,6 +9,12 @@
 // The table below is pinned by test/engine.test.js against
 // `node scripts/verify-dataset.js` in that repo, which re-scores all 239 rows
 // offline. It is not hand-maintained: it was wrong once because it was.
+//
+// These are the figures of the DEPOSITED corpus, scored with `static-fetch-regex-v1`.
+// Three rules were tightened on 2026-07-25 (number-inside-a-name, arrow-as-emoji,
+// acronym-as-shouting) and `grade_landing_copy` now applies them. The archived corpus
+// deliberately keeps its original scoring: it is a citable object with a DOI, not a
+// live view. `method` below records which rule set produced it.
 
 export const DATASET = {
   n: 239,
@@ -16,6 +22,7 @@ export const DATASET = {
   excluded: 64,
   extracted_at: '2026-07-24',
   method: 'static-fetch-regex-v1 (raw HTML, no JS execution, no LLM)',
+  scoring_note: 'Scored with static-fetch-regex-v1. grade_landing_copy applies the corrected v2 rules, so a page re-scored today can differ from its row here.',
   source_csv: 'https://raw.githubusercontent.com/parweb/landing-copy-grader/main/data/landing-pages-scores.csv',
   score: { min: 41, median: 79, mean: 80.1, max: 100, perfect_100: 19, below_70: 31 },
   distribution: {

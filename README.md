@@ -50,8 +50,8 @@ Or in any MCP client config (`claude_desktop_config.json`, `.mcp.json`, Cursor, 
 ```
 
 Or install the self-contained MCPB bundle (dependencies included, no install step) from the
-[v1.0.1 release](https://github.com/parweb/mcp-ai-slop-checker/releases/tag/v1.0.1) —
-`mcp-ai-slop-checker.mcpb`, SHA-256 `594b0f89de6f1c3827ac19dae1b71a3e362a60ddfe86df68e30af3b356fce395`.
+[v1.0.2 release](https://github.com/parweb/mcp-ai-slop-checker/releases/tag/v1.0.2) —
+`mcp-ai-slop-checker.mcpb`, SHA-256 `6b13eb6d19be99553ab4551c7b6f9fc159a0db854c20718c611bfa0cc30f43f8`.
 Rebuild it yourself and compare: `./scripts/build-mcpb.sh`.
 
 From source:
@@ -102,6 +102,8 @@ The hand-written paragraph in [`test/engine.test.js`](test/engine.test.js) — s
 
 Scores a hero block 0-100 across Anti-hype (25), Specificity (25), Clarity (25), Headline shape (13), CTA (12). `subhead` and `cta` are optional, but an empty CTA scores 0 on that dimension.
 
+Three exclusions are worth knowing, because each one was a measured false positive rather than a preference: **a digit that is part of a name, a version, a year or a list index is not a quantified claim** (`Auth0`, `Framer 3.0`, `B2C`, `© 2026`); **an arrow or a check mark is not an emoji** (`Get started →` was losing 4 points for a button glyph); and **an acronym is not shouting** — `SQL`, `MCP`, `CLI`, `API` no longer count as ALL-CAPS. Byte-for-byte the same rules as the browser grader in [parweb/landing-copy-grader](https://github.com/parweb/landing-copy-grader) and the live one; verified identical on all 239 corpus pages.
+
 Real output:
 
 ```jsonc
@@ -141,6 +143,8 @@ Both numbers are asserted in [`test/engine.test.js`](test/engine.test.js), so th
 ### `get_slop_stats()`
 
 Without a baseline, "your copy scored 74" is meaningless. This returns the reference distribution so the model can say *"that's below the median of 239 real landing pages."*
+
+These are the figures of the **deposited corpus**, scored with `static-fetch-regex-v1`. Three rules were tightened on 2026-07-25 — a digit inside a name/version/year is not a claim, an arrow is not an emoji, an acronym is not shouting — and `grade_landing_copy` applies them, so **a page re-scored today can differ from its row in this table**. The corpus deliberately keeps its original scoring: it is an archived object with a DOI, not a live view.
 
 | | |
 |---|---|
@@ -203,7 +207,7 @@ Same engines, other surfaces:
 
 - **Stable:** the three tool signatures, the JSON shape they return, and the two scoring engines. Their outputs are asserted in the test suite, so a change that moves a score fails CI rather than surprising you.
 - **Opinionated and expected to change:** the word lists. English only.
-- **Known gap:** the `v1.0.0` MCPB bundle ships the pre-correction benchmark numbers. Use `v1.0.1` or the `npx github:` install, which tracks `main`.
+- **Known gap:** the `v1.0.0` bundle ships wrong benchmark numbers and `v1.0.0`/`v1.0.1` both ship the pre-correction scoring rules. Use `v1.0.2`, or the `npx github:` install, which tracks `main`.
 
 Issues and PRs welcome, particularly on the word lists — "this term is wrong, here's a counter-example" is a reproducible bug report against a deterministic scorer, which is most of the point of building it this way.
 

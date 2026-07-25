@@ -6,7 +6,7 @@ import { checkAiSlop } from './slop.js';
 import { gradeLandingCopy } from './copy.js';
 import { getSlopStats } from './stats.js';
 
-const server = new McpServer({ name: 'ai-slop-checker', version: '1.0.1' });
+const server = new McpServer({ name: 'ai-slop-checker', version: '1.0.2' });
 
 const json = (o) => ({ content: [{ type: 'text', text: JSON.stringify(o, null, 2) }] });
 

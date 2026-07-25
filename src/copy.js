@@ -22,8 +22,45 @@ function countHits(t, list) {
   return n;
 }
 
-const hasNumber = (t) => /\d/.test(t);
-const emojiCount = (t) => (t.match(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}]/gu) || []).length;
+// Three rules were tightened on 2026-07-25 after an audit of the 239-page corpus.
+// Kept byte-for-byte in step with the browser grader in parweb/landing-copy-grader
+// and with the live one, so the same hero copy scores the same everywhere.
+
+// A digit is only a claim if it isn't part of a name, a version, a year or a list
+// index: 11 of the 44 pages the old rule credited with a number were artefacts
+// (Auth0, Mem0, n8n.io, "Framer 3.0", B2C, "(c) 2026", tailwindcss quoting pt-4).
+const hasNumber = (t) => {
+  const s = String(t)
+    .replace(/\u00a9\s*\d{4}/g, ' ')
+    .replace(/\b(?:19|20)\d{2}\b/g, ' ')
+    .replace(/\bv?\d+(?:\.\d+)+\b(?!\s*%)/g, ' ')
+    .replace(/[A-Za-z]+-?\d+[A-Za-z0-9-]*/g, ' ')
+    .replace(/^\s*\d+[.)]\s+/gm, ' ');
+  return /\d/.test(s);
+};
+
+// A button arrow is not an emoji. "Get started ->" was losing 4 points for a
+// typographic sign a large share of landing pages use.
+const emojiCount = (t) => {
+  const m = t.match(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}]/gu) || [];
+  return m.filter((ch) => {
+    const p = ch.codePointAt(0);
+    if (p >= 0x2b00 && p <= 0x2b8f) return false;   // supplemental arrows
+    if (p >= 0x2713 && p <= 0x2714) return false;   // check marks
+    if (p >= 0x2794 && p <= 0x27bf) return false;   // dingbat arrows
+    return true;
+  }).length;
+};
+
+// An acronym is not a shout. On technical pages SQL/MCP/TUI/CLI/PATH gave 5 false
+// positives out of 5. Rule: 6 letters or more is a shout; below that, only words
+// people actually do shout in a headline.
+const SHOUT = ['FREE', 'NEW', 'BEST', 'NOW', 'SALE', 'TODAY', 'FAST', 'EASY', 'ONLY',
+  'SAVE', 'JOIN', 'WIN', 'TOP', 'HOT', 'BIG', 'MUST', 'LIMITED'];
+const capsCount = (ws) => ws.filter((w) => {
+  if (!(w.length > 2 && w === w.toUpperCase() && /[A-Z]/.test(w))) return false;
+  return w.length >= 6 || SHOUT.includes(w);
+}).length;
 
 export function gradeLandingCopy(headline = '', subhead = '', cta = '') {
   const h = headline, s = subhead, c = cta;
@@ -34,7 +71,7 @@ export function gradeLandingCopy(headline = '', subhead = '', cta = '') {
   const hype = countHits(all, HYPE);
   const excl = (all.match(/!/g) || []).length;
   const emo = emojiCount(all);
-  const caps = words(h + ' ' + s).filter((w) => w.length > 2 && w === w.toUpperCase() && /[A-Z]/.test(w)).length;
+  const caps = capsCount(words(h + ' ' + s));
   dims.push({ key: 'Anti-hype', max: 25, score: Math.max(0, 25 - (hype * 7 + excl * 5 + emo * 4 + caps * 4)), notes: { hype, exclamations: excl, emoji: emo, allcaps: caps } });
 
   // 2. Specificity (25)
