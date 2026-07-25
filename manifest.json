@@ -1,0 +1,25 @@
+{
+  "manifest_version": "0.2",
+  "name": "mcp-ai-slop-checker",
+  "display_name": "AI Slop Checker",
+  "version": "1.0.1",
+  "description": "Scores text and landing-page copy for AI-writing style tells. Deterministic, offline, no LLM call, no API key.",
+  "author": { "name": "parweb", "url": "https://github.com/parweb" },
+  "homepage": "https://github.com/parweb/mcp-ai-slop-checker",
+  "documentation": "https://github.com/parweb/mcp-ai-slop-checker#readme",
+  "license": "MIT",
+  "keywords": ["mcp", "ai-detection", "writing", "copywriting"],
+  "server": {
+    "type": "node",
+    "entry_point": "server/src/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/src/index.js"]
+    }
+  },
+  "tools": [
+    { "name": "check_ai_slop", "description": "Score any text 0-100 on 6 AI-writing tells" },
+    { "name": "grade_landing_copy", "description": "Grade a headline/subhead/CTA on 5 dimensions" },
+    { "name": "get_slop_stats", "description": "Dataset stats from 239 real landing pages" }
+  ]
+}

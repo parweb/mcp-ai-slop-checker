@@ -8,13 +8,13 @@
     "source": "github"
   },
   "websiteUrl": "https://github.com/parweb/mcp-ai-slop-checker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "packages": [
     {
       "registryType": "mcpb",
-      "identifier": "https://github.com/parweb/mcp-ai-slop-checker/releases/download/v1.0.0/mcp-ai-slop-checker.mcpb",
-      "fileSha256": "56a17584b7504d70a9023f8a4b5ce2e7e528b4982a3781a19351f81e6403f2d9",
-      "version": "1.0.0",
+      "identifier": "https://github.com/parweb/mcp-ai-slop-checker/releases/download/v1.0.1/mcp-ai-slop-checker.mcpb",
+      "fileSha256": "594b0f89de6f1c3827ac19dae1b71a3e362a60ddfe86df68e30af3b356fce395",
+      "version": "1.0.1",
       "transport": {
         "type": "stdio"
       }

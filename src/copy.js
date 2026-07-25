@@ -66,7 +66,7 @@ export function gradeLandingCopy(headline = '', subhead = '', cta = '') {
 
   const fixes = [];
   if (hype > 0) fixes.push({ title: 'Cut the hype words', detail: 'Found ' + hype + ' ("revolutionize/unlock/seamless/leverage"…). Replace each with a plain, concrete verb.' });
-  if (!hasNumber(all)) fixes.push({ title: 'Add one number', detail: 'No concrete figure anywhere. A single number (a %, a count, a timeframe) instantly raises believability. 81% of the 239 pages in our dataset fail this one.' });
+  if (!hasNumber(all)) fixes.push({ title: 'Add one number', detail: 'No concrete figure anywhere. A single number (a %, a count, a timeframe) instantly raises believability. 82% of the 239 pages in our dataset fail this one.' });
   if (filler > 0) fixes.push({ title: 'Delete filler', detail: 'Found ' + filler + ' vague words ("solutions/platform/powerful"…). They add length, not meaning.' });
   if (hw > 12) fixes.push({ title: 'Shorten the headline', detail: hw + ' words is too long. Aim for ≤10 — cut to the single idea a stranger would repeat.' });
   if (hw > 0 && hw < 3) fixes.push({ title: 'Say more in the headline', detail: 'A ' + hw + '-word headline is usually too vague to carry the offer. Add the outcome.' });

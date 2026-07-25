@@ -58,7 +58,7 @@ const AI_PROSE = `In today's fast-paced world, it's important to note that busin
 
 const HUMAN_PROSE = `We scored 239 landing pages last Tuesday. The script took 40 minutes and broke twice on Cloudflare. Median score: 79.
 
-What surprised me was the tell that fired most. Not em-dashes. Not "delve". It was the absence of any number at all: 194 of the 239 heroes contain no digit. Four out of five companies make a claim about their product and attach no quantity to it.
+What surprised me was the tell that fired most. Not em-dashes. Not "delve". It was the absence of any number at all: 195 of the 239 heroes contain no digit. Four out of five companies make a claim about their product and attach no quantity to it.
 
 Stripe scored 61. I stared at that for a while, because Stripe's copy is obviously written by humans who are good at their job. So the score is not a verdict on the writer. It is a count of how generic the surface reads, nothing more.`;
 
@@ -99,15 +99,29 @@ test('check_ai_slop is deterministic', () => {
   assert.deepEqual(checkAiSlop(AI_PROSE), checkAiSlop(AI_PROSE));
 });
 
-test('get_slop_stats: 239 pages, and the flag counts match the published CSV', () => {
+test('get_slop_stats: 239 pages, and every flag count matches the published dataset', () => {
   const s = getSlopStats();
   assert.equal(s.n, 239);
   assert.equal(s.score.median, 79);
   assert.equal(s.score.min, 41);
-  const nonum = s.flag_frequency.find((f) => f.flag === 'nonum');
-  assert.equal(nonum.pages, 194);
   assert.equal(s.lowest_10.length, 10);
   assert.equal(s.perfect_100_domains.length, s.score.perfect_100);
   const total = Object.values(s.distribution).reduce((a, b) => a + b, 0);
   assert.equal(total, 239, 'distribution must cover all 239 pages');
+
+  // Pinned against `node scripts/verify-dataset.js` in parweb/landing-copy-grader,
+  // which re-scores the 239 published rows offline. The whole table is asserted,
+  // not just one row: an earlier CSV export truncated each row to three flags,
+  // and only `nonum` was pinned here, so the four other wrong counts shipped.
+  assert.deepEqual(
+    s.flag_frequency.map((f) => [f.flag, f.pages, f.pct]),
+    [
+      ['nonum', 195, 82], ['filler', 82, 34], ['weakcta', 35, 15],
+      ['caps', 33, 14], ['hype', 16, 7], ['shorthl', 13, 5],
+      ['longhl', 9, 4], ['excl', 7, 3], ['emoji', 7, 3]
+    ]
+  );
+  for (const f of s.flag_frequency) {
+    assert.equal(f.pct, Math.round((100 * f.pages) / s.n), `${f.flag}: pct must follow from pages`);
+  }
 });
