@@ -1,0 +1,44 @@
+{
+  "name": "mcp-ai-slop-checker",
+  "version": "1.0.0",
+  "description": "MCP server that scores text and landing-page copy for AI-writing style tells. Deterministic, offline, no LLM call.",
+  "type": "module",
+  "bin": {
+    "mcp-ai-slop-checker": "src/index.js"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./slop": "./src/slop.js",
+    "./copy": "./src/copy.js",
+    "./stats": "./src/stats.js"
+  },
+  "files": ["src", "README.md", "LICENSE"],
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test test/"
+  },
+  "keywords": [
+    "mcp",
+    "modelcontextprotocol",
+    "model-context-protocol",
+    "mcp-server",
+    "ai-detection",
+    "ai-slop",
+    "writing",
+    "copywriting",
+    "claude"
+  ],
+  "license": "MIT",
+  "author": "parweb",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parweb/mcp-ai-slop-checker.git"
+  },
+  "homepage": "https://github.com/parweb/mcp-ai-slop-checker#readme",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.25.0"
+  }
+}
